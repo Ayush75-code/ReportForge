@@ -17,6 +17,7 @@
 *   **Body:** Regular (14px).
 *   **Data:** Monospace numbers for tables.
 *   **Score Display:** Bold, 48px for Performance Score.
+*   **AI-Generated Text:** Rendered as plain text. No markdown parsing. Symbols like `**`, `_`, `#` display literally if present (should not be present per Agent 2 rules).
 
 ---
 

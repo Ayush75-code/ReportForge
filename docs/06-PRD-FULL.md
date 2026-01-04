@@ -310,6 +310,7 @@ For an agency with 10 clients: **20-40 hours/month on reporting alone.**
 *   ✅ User can regenerate analysis if unsatisfied (up to 3 times).
 *   ✅ Analysis is editable before PDF generation.
 *   ✅ **Personal Note** field available for user to add human touch (optional, but prompted).
+*   ✅ **Plain text output only.** AI must NOT use markdown (`**bold**`), LaTeX, or special symbols. Output renders directly in UI and PDF.
 
 **Priority:** P0 (Must-Have for MVP)
 **Complexity:** High
