@@ -44,5 +44,8 @@ next-env.d.ts
 # Testing
 coverage/
 
+# Temporary files
+tmp/
+
 # Misc
 *.pem

@@ -133,6 +133,78 @@ Tell me which phase and task you want to work on:
 
 ---
 
+## FILE ORGANIZATION RULES
+
+**Keep the project directory clean. Every file has its place.**
+
+### Root Directory (/)
+ONLY these files should be in root:
+```
+AI_AGENT_PROMPT.txt    ← Agent context (this file)
+TASK_PHASES.md         ← Development roadmap
+START_HERE.md          ← Quick start guide
+PROGRESS.md            ← Task tracking
+ERRORS.md              ← Bug log
+README.md              ← Project overview
+package.json           ← Dependencies
+.env.local             ← Environment variables (git-ignored)
+.gitignore
+next.config.js
+tailwind.config.js
+tsconfig.json
+```
+
+### Folder Structure
+```
+/docs                  ← All documentation (DO NOT add code here)
+/scripts               ← Utility scripts, one-time fixes, database seeds
+/src                   ← All source code
+  /app                 ← Next.js pages and API routes
+  /components          ← React components
+  /lib                 ← Utilities, clients, helpers
+  /types               ← TypeScript type definitions
+  /styles              ← Global CSS (if needed)
+/public                ← Static assets (images, fonts)
+```
+
+### Where to Save Different File Types
+
+| File Type | Save To | Example |
+|:---|:---|:---|
+| Fix scripts (one-time) | `/scripts/fixes/` | `scripts/fixes/migrate-data.ts` |
+| Database seeds | `/scripts/seeds/` | `scripts/seeds/seed-clients.ts` |
+| Utility scripts | `/scripts/utils/` | `scripts/utils/generate-types.ts` |
+| Test scripts | `/scripts/tests/` | `scripts/tests/test-openai.ts` |
+| React components | `/src/components/` | `src/components/ui/Button.tsx` |
+| Page components | `/src/app/` | `src/app/(dashboard)/page.tsx` |
+| API routes | `/src/app/api/` | `src/app/api/analyze/route.ts` |
+| Utility functions | `/src/lib/utils/` | `src/lib/utils/formatCurrency.ts` |
+| Type definitions | `/src/types/` | `src/types/report.ts` |
+| Configuration | Root directory | `tailwind.config.js` |
+| Documentation | `/docs/` | `docs/06-PRD-FULL.md` |
+| Temporary/debug files | `/tmp/` (git-ignored) | `tmp/debug-output.json` |
+
+### Naming Conventions
+
+**Files:**
+- React components: PascalCase (`ReportCard.tsx`)
+- Utilities/hooks: camelCase (`useAuth.ts`, `formatDate.ts`)
+- API routes: lowercase (`route.ts` in folder)
+- Scripts: kebab-case (`migrate-data.ts`)
+- Docs: UPPERCASE with numbers (`06-PRD-FULL.md`)
+
+**Folders:**
+- All lowercase with hyphens if needed (`(dashboard)`, `api`, `ui`)
+
+### DO NOT:
+- Put scripts in root directory
+- Put temporary files in `/src`
+- Create random folders
+- Mix documentation with code
+- Leave debug/test files outside `/tmp` or `/scripts`
+
+---
+
 ## PROJECT FILES
 
 | File | Purpose |
@@ -143,6 +215,7 @@ Tell me which phase and task you want to work on:
 | `ERRORS.md` | Bug log with resolutions (create if missing) |
 | `START_HERE.md` | Quick start guide |
 | `docs/` | All documentation (11 files) |
+| `scripts/` | Utility and fix scripts |
 
 ---
 
