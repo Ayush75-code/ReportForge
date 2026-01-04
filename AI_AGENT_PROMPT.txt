@@ -1,179 +1,754 @@
-# ReportForge AI Development Agent - Initial Prompt
+# ReportForge - AI Development Agent Instructions
 
-Copy and paste this prompt when starting a new coding session with an AI assistant (Claude, GPT, etc.).
-
----
-
-## 🚀 INITIAL PROMPT (Copy This First)
-
-```
-You are a Senior Full-Stack Developer building ReportForge, a B2B SaaS app for marketing agencies.
-
-**ReportForge** transforms Meta Ads CSV exports into AI-powered, branded PDF reports in under 60 seconds.
-
-**Tech Stack:**
-- Frontend: Next.js 14 (App Router), TypeScript, Tailwind CSS, Shadcn/UI
-- Backend: Supabase (Auth, PostgreSQL, Storage), OpenAI API (gpt-4o-mini)
-- PDF: @react-pdf/renderer
-- Payments: Stripe
-
-**Before writing any code, read the documentation files in this order:**
-1. START_HERE.md (this file)
-2. docs/06-PRD-FULL.md (product requirements)
-3. docs/07-MVP-SPECIFICATION.md (MVP scope)
-4. docs/08-SYSTEM-ARCHITECTURE.md (tech architecture)
-5. docs/10-DESIGN-SYSTEM.md (visual design)
-6. docs/01-SYSTEM-PROMPTS.md (AI agent prompts for CSV/Analysis/PDF)
-
-**Key Design Decisions (from Market Research):**
-- Performance Score (0-100) answers "Is it good or bad?" at a glance
-- Quick Summary: Single-sentence scannable overview
-- Personal Note: Optional human touch before PDF export
-- Deferred Branding: Users generate first report BEFORE adding logo
-- Plain Text Only: AI outputs no markdown (**bold**), LaTeX, or symbols
-
-**Current Task:** [DESCRIBE WHAT YOU WANT TO BUILD]
-
-Please confirm you've understood the project context and are ready to proceed.
-```
+**Read this entire file before writing any code.**
 
 ---
 
-## 📋 FOLLOW-UP PROMPTS (Use As Needed)
+## PROJECT OVERVIEW
 
-### Starting a New Feature
-```
-I want to implement [FEATURE NAME] from docs/06-PRD-FULL.md.
+**Product:** ReportForge
+**Tagline:** "AI-powered reports, forged in seconds."
+**Type:** B2B SaaS for marketing agencies
 
-Please:
-1. Review the feature requirements in the PRD
-2. Check the relevant architecture in docs/08-SYSTEM-ARCHITECTURE.md
-3. Follow the design system in docs/10-DESIGN-SYSTEM.md
-4. Create the necessary files and components
-5. Update PROGRESS.md when complete
-```
+**What It Does:**
+Marketing agencies upload Meta Ads CSV exports → AI analyzes the data → Generates branded PDF reports with insights, wins, concerns, and recommendations.
 
-### Fixing a Bug
-```
-I'm experiencing this issue: [DESCRIBE BUG]
-
-Please:
-1. Diagnose the root cause
-2. Check if this relates to any documented behavior in docs/
-3. Implement a fix
-4. Log the issue and resolution in ERRORS.md
-```
-
-### Implementing AI Analysis (Agent 2)
-```
-Implement the Meta Ads Performance Analyst agent from docs/01-SYSTEM-PROMPTS.md.
-
-Critical requirements:
-- Output Performance Score (0-100) with label (Strong/Moderate/Needs Attention)
-- Output Quick Summary (single sentence)
-- Output: summary, 3 wins, 2 concerns, 3 recommendations
-- PLAIN TEXT ONLY - no markdown, no **bold**, no _italic_, no LaTeX
-- Use gpt-4o-mini with temperature 0.3
-- Response format: JSON
-```
-
-### Implementing PDF Generation (Agent 3)
-```
-Implement the PDF Report Generator from docs/01-SYSTEM-PROMPTS.md.
-
-Critical requirements:
-- Include Performance Score Badge in header
-- Include Quick Summary highlighted box
-- Include Personal Note section (if provided)
-- Use agency branding (logo, color) or defaults
-- A4, Portrait, 40pt margins
-- Use @react-pdf/renderer
-```
-
-### Implementing CSV Validation (Agent 1)
-```
-Implement the CSV Validator Agent from docs/01-SYSTEM-PROMPTS.md.
-
-Required columns (case-sensitive):
-- Campaign Name, Impressions, Clicks, Spend, Conversions, CPC, CTR, CPA
-
-Validation rules:
-- Reject if missing columns (list which ones)
-- Reject if zero spend
-- Warn if low impressions (<1000)
-- Parse with PapaParse
-```
-
-### Creating UI Components
-```
-Create the [COMPONENT NAME] component following docs/10-DESIGN-SYSTEM.md.
-
-Design requirements:
-- Use Shadcn/UI base components
-- Colors: Primary (Indigo-600), Success (Emerald-600), Warning (Amber-500), Error (Rose-600)
-- Font: Inter
-- Cards: White bg, Slate-200 border, Shadow-sm, Rounded-lg
-- Buttons: Primary (Indigo-600), Secondary (White/Slate border)
-```
-
-### Database/Supabase Work
-```
-I need to work on the database schema for [TABLE/FEATURE].
-
-Please reference:
-- docs/08-SYSTEM-ARCHITECTURE.md for schema definitions
-- Use Supabase migrations
-- Implement Row Level Security (RLS) policies
-- Test queries before committing
-```
+**Core Value:** Reduce report creation from 2-3 hours to 60 seconds.
 
 ---
 
-## ⚠️ CRITICAL RULES (Always Follow)
+## TECH STACK
+
+| Layer | Technology |
+|:---|:---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript (strict mode) |
+| Styling | Tailwind CSS |
+| Components | Shadcn/UI |
+| Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth |
+| Storage | Supabase Storage |
+| AI | OpenAI API (gpt-4o-mini) |
+| PDF | @react-pdf/renderer |
+| Payments | Stripe |
+| CSV Parsing | PapaParse |
+
+---
+
+## CRITICAL RULES (Always Follow)
 
 1. **Product Name:** Always use "ReportForge" (never "InsightEngine")
-2. **Plain Text:** AI outputs must NOT contain markdown, LaTeX, or formatting symbols
-3. **Human-in-the-Loop:** Users MUST review/edit analysis before PDF generation
-4. **Branding:** Deferred until after first successful report
-5. **Error Logging:** Log all issues to ERRORS.md
-6. **Progress Tracking:** Update PROGRESS.md after completing tasks
-7. **Type Safety:** All code must be TypeScript with proper types
-8. **No Placeholders:** Generate actual working code, not pseudocode
+2. **Plain Text Output:** AI-generated text must NOT contain markdown (`**bold**`, `_italic_`), LaTeX, or symbols
+3. **Human-in-the-Loop:** Users MUST review/edit AI analysis before PDF generation
+4. **Type Safety:** All code must be TypeScript with proper types
+5. **Error Logging:** Log issues to ERRORS.md with resolutions
+6. **Progress Tracking:** Update PROGRESS.md after completing each task
+7. **Deferred Branding:** Users generate first report BEFORE adding logo (faster onboarding)
+8. **Performance Score:** AI must output a 0-100 score answering "Is it good or bad?"
 
 ---
 
-## 📁 Project Structure Reference
+## DESIGN SYSTEM (Quick Reference)
+
+**Colors:**
+- Primary: Indigo-600 (`#4f46e5`)
+- Success: Emerald-600 (`#059669`)
+- Warning: Amber-500 (`#f59e0b`)
+- Error: Rose-600 (`#e11d48`)
+- Background: Slate-50 (`#f8fafc`)
+- Surface: White (`#ffffff`)
+
+**Typography:**
+- Font: Inter (Google Fonts)
+- Headings: Bold/SemiBold
+- Body: Regular 14px
+
+**Components (Shadcn/UI):**
+- Buttons: Primary (Indigo-600), Secondary (White/Slate border)
+- Cards: White bg, Slate-200 border, Shadow-sm, Rounded-lg
+- Inputs: Height 44px, Focus ring Indigo-500
+
+---
+
+## DATABASE SCHEMA
+
+```sql
+-- Agencies (one per user account)
+agencies (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES auth.users,
+  name TEXT NOT NULL,
+  logo_url TEXT,
+  brand_color TEXT DEFAULT '#6366f1',
+  created_at TIMESTAMPTZ
+)
+
+-- Clients (belong to agency)
+clients (
+  id UUID PRIMARY KEY,
+  agency_id UUID REFERENCES agencies,
+  name TEXT NOT NULL,
+  website TEXT,
+  industry TEXT,
+  created_at TIMESTAMPTZ
+)
+
+-- Reports (belong to client)
+reports (
+  id UUID PRIMARY KEY,
+  client_id UUID REFERENCES clients,
+  agency_id UUID REFERENCES agencies,
+  status TEXT DEFAULT 'pending', -- pending, analyzing, ready, failed
+  performance_score INTEGER,
+  score_label TEXT,
+  quick_summary TEXT,
+  summary TEXT,
+  wins JSONB,
+  concerns JSONB,
+  recommendations JSONB,
+  personal_note TEXT,
+  pdf_url TEXT,
+  csv_data JSONB,
+  date_range_start DATE,
+  date_range_end DATE,
+  created_at TIMESTAMPTZ
+)
+
+-- Subscriptions
+subscriptions (
+  id UUID PRIMARY KEY,
+  agency_id UUID REFERENCES agencies,
+  stripe_customer_id TEXT,
+  stripe_subscription_id TEXT,
+  plan TEXT, -- 'trial', 'starter', 'pro'
+  reports_used INTEGER DEFAULT 0,
+  reports_limit INTEGER,
+  current_period_start TIMESTAMPTZ,
+  current_period_end TIMESTAMPTZ,
+  status TEXT -- 'active', 'cancelled', 'past_due'
+)
+```
+
+---
+
+## AI AGENT OUTPUT SCHEMA
+
+When implementing the AI analysis (Agent 2), the output must be:
+
+```json
+{
+  "performance_score": 82,
+  "score_label": "Strong Performance",
+  "quick_summary": "Spent $2,450, generated 89 conversions at $27.53 CPA. Strong performance overall.",
+  "summary": "This month showed strong results across all campaigns...",
+  "wins": [
+    "Winter Sale campaign generated 45 conversions at $18.50 CPA, 38% below target",
+    "CTR of 3.2% on Brand Awareness indicates strong creative resonance",
+    "Overall conversion volume up 22% with stable cost efficiency"
+  ],
+  "concerns": [
+    "Retargeting campaign spent $450 with only 2 conversions - review audience",
+    "CPA trending upward on Prospecting, increasing 15% to $34.20"
+  ],
+  "recommendations": [
+    "Increase daily budget on Winter Sale by $50 to capture additional volume",
+    "Launch creative refresh for Retargeting with 3 new variants",
+    "Implement conversion-based bidding on Prospecting campaign"
+  ]
+}
+```
+
+**Performance Score Calculation:**
+- Base: 50
+- +20 if CPA < $30
+- +15 if CTR > 2%
+- +10 if no campaigns with 0 conversions
+- -10 for each critical concern
+- Clamped to 0-100
+
+---
+
+# DEVELOPMENT PHASES
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 1: FOUNDATION (Week 1-2)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Set up project infrastructure and core UI shell.
+
+### Task 1.1: Project Initialization
+```
+□ Initialize Next.js 14 with TypeScript
+  Command: npx create-next-app@latest ./ --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+□ Install dependencies:
+  - npm install @supabase/supabase-js @supabase/ssr
+  - npm install openai
+  - npm install @react-pdf/renderer
+  - npm install papaparse @types/papaparse
+  - npm install lucide-react
+  - npx shadcn-ui@latest init
+□ Configure Tailwind with design system colors
+□ Set up environment variables (.env.local)
+□ Create PROGRESS.md and ERRORS.md files
+```
+
+### Task 1.2: Supabase Setup
+```
+□ Create Supabase project
+□ Create database tables (agencies, clients, reports, subscriptions)
+□ Set up Row Level Security (RLS) policies
+□ Create Supabase client utilities (lib/supabase/client.ts, server.ts)
+□ Test database connection
+```
+
+### Task 1.3: Authentication
+```
+□ Implement Supabase Auth
+□ Create signup page (/signup)
+□ Create login page (/login)
+□ Create auth callback handler
+□ Create protected route middleware
+□ Create logout functionality
+□ Test auth flow end-to-end
+```
+
+### Task 1.4: Dashboard Shell
+```
+□ Create dashboard layout with sidebar
+□ Implement navigation (Dashboard, Reports, Clients, Settings)
+□ Create empty state components with trust signals
+□ Add user profile dropdown in sidebar
+□ Make layout responsive
+```
+
+**Phase 1 Deliverable:** User can sign up, log in, and see empty dashboard.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 2: CLIENT MANAGEMENT (Week 2-3)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Users can add, edit, and manage clients.
+
+### Task 2.1: Client List Page
+```
+□ Create /clients page
+□ Fetch and display clients from Supabase
+□ Show: name, last report date, total reports
+□ Empty state: "Add your first client"
+□ Add search/filter functionality
+```
+
+### Task 2.2: Add Client
+```
+□ Create "Add Client" modal/dialog
+□ Form fields: Name (required), Website (optional), Industry (optional)
+□ Form validation with error messages
+□ Insert into Supabase on submit
+□ Refresh list after adding
+```
+
+### Task 2.3: Edit/Delete Client
+```
+□ Create "Edit Client" modal
+□ Pre-populate form with existing data
+□ Update Supabase on save
+□ Create "Delete Client" with confirmation dialog
+□ Handle cascade (what happens to reports?)
+```
+
+**Phase 2 Deliverable:** User can manage their client list.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 3: CSV UPLOAD & VALIDATION (Week 3-4)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Users can upload and validate Meta Ads CSV files.
+
+### Task 3.1: New Report Page
+```
+□ Create /reports/new page
+□ Step 1: Client selector dropdown (+ "Add New" option)
+□ Inline client creation if needed
+□ Store selected client in state
+```
+
+### Task 3.2: File Upload Component
+```
+□ Create drag-and-drop upload zone
+□ Accept only .csv files
+□ Show file name after selection
+□ File size limit: 10MB
+□ Loading state during upload
+```
+
+### Task 3.3: CSV Validation (Agent 1)
+```
+□ Parse CSV with PapaParse
+□ Validate required columns:
+  - Campaign Name, Impressions, Clicks, Spend
+  - Conversions, CPC, CTR, CPA
+□ Validate data types (numbers, non-empty)
+□ Reject with specific error messages if invalid
+□ Show success summary: "12 campaigns validated, $2,450 total spend"
+□ Store parsed data in state
+```
+
+### Task 3.4: Validation UI Feedback
+```
+□ Green checklist for valid files
+□ Red error box with specific issues for invalid
+□ "Re-upload" button if failed
+□ "Generate Analysis" button if valid
+```
+
+**Phase 3 Deliverable:** User can upload CSV and see validation results.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 4: AI ANALYSIS (Week 4-5)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** AI analyzes campaign data and generates insights.
+
+### Task 4.1: OpenAI Integration
+```
+□ Create OpenAI client (lib/openai/client.ts)
+□ Create analysis API route (/api/analyze)
+□ Implement Agent 2 prompt from docs/01-SYSTEM-PROMPTS.md
+□ Handle API errors and timeouts (30s max)
+□ Test with sample data
+```
+
+### Task 4.2: Analysis Processing
+```
+□ Aggregate CSV data (totals, averages)
+□ Identify top/bottom performers
+□ Send aggregated data to OpenAI (not full CSV)
+□ Parse JSON response
+□ Validate response structure
+□ Save to Supabase reports table
+```
+
+### Task 4.3: Analysis Editor ("The Forge")
+```
+□ Create editor page /reports/[id]/edit
+□ Display Performance Score badge (0-100 with color)
+□ Display Quick Summary (highlighted box)
+□ Editable Summary textarea
+□ Editable Wins list (3 items, green border)
+□ Editable Concerns list (2 items, amber border)
+□ Editable Recommendations list (3 items, indigo border)
+□ Personal Note textarea (optional)
+□ "Regenerate" button (max 3 times)
+□ "Forge PDF" button
+```
+
+### Task 4.4: Analysis State Management
+```
+□ Track edit state vs saved state
+□ Auto-save on blur (debounced)
+□ Show "Saving..." indicator
+□ Handle regeneration (replace content)
+□ Track regeneration count
+```
+
+**Phase 4 Deliverable:** User can generate and edit AI analysis.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 5: PDF GENERATION (Week 5-6)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Generate branded PDF reports.
+
+### Task 5.1: PDF Template
+```
+□ Create PDF component with @react-pdf/renderer
+□ A4 portrait, 40pt margins
+□ Header: Agency logo (or text fallback) + Client name
+□ Performance Score badge in header
+□ Quick Summary highlighted box
+□ Sections: Summary, Wins (✓), Concerns (⚠), Recommendations (→)
+□ Personal Note section (if provided)
+□ Footer: "Generated by [Agency] using ReportForge"
+```
+
+### Task 5.2: Branding Integration
+```
+□ Fetch agency branding (logo, color)
+□ Use brand color for headers and accents
+□ Fallback to default color (#6366f1) if not set
+□ Handle missing logo gracefully (show agency name text)
+```
+
+### Task 5.3: PDF Generation API
+```
+□ Create API route /api/generate-pdf
+□ Render PDF to buffer
+□ Upload to Supabase Storage (reports bucket)
+□ Return signed URL
+□ Update report record with pdf_url
+```
+
+### Task 5.4: PDF Download Flow
+```
+□ Show "Generating PDF..." loading state
+□ Display success with download button
+□ Open PDF in new tab option
+□ Store PDF URL for re-download
+□ Handle generation errors
+```
+
+**Phase 5 Deliverable:** User can generate and download branded PDF.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 6: REPORT HISTORY & SETTINGS (Week 6-7)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Users can view past reports and configure settings.
+
+### Task 6.1: Reports List Page
+```
+□ Create /reports page
+□ List all reports with: date, client, status, score
+□ Filter by client, date range
+□ Sort by date (newest first)
+□ Pagination (20 per page)
+□ Actions: View, Download PDF, Delete
+```
+
+### Task 6.2: Report Detail Page
+```
+□ Create /reports/[id] page
+□ Show full analysis (read-only)
+□ Show report metadata
+□ Download PDF button
+□ "Edit Analysis" button (return to editor)
+□ Delete button with confirmation
+```
+
+### Task 6.3: Agency Branding Settings
+```
+□ Create /settings/branding page
+□ Logo upload (PNG/JPG, max 500KB)
+□ Logo preview
+□ Brand color picker (hex input + visual picker)
+□ Color preview
+□ Save to Supabase
+□ SUCCESS: "Branding updated. Future reports will use these settings."
+```
+
+### Task 6.4: Account Settings
+```
+□ Create /settings/account page
+□ Change email
+□ Change password
+□ Agency name edit
+□ Delete account (with confirmation)
+```
+
+**Phase 6 Deliverable:** User can manage reports and settings.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 7: BILLING & USAGE (Week 7-8)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Subscription management with Stripe.
+
+### Task 7.1: Usage Tracking
+```
+□ Track reports_used per billing period
+□ Display usage in dashboard: "8 of 20 reports used"
+□ Progress bar visualization
+□ Warning at 80% usage
+□ Hard block at 100% with upgrade prompt
+□ Auto-reset on billing period start
+```
+
+### Task 7.2: Stripe Integration
+```
+□ Create Stripe account and get API keys
+□ Create products (Starter $99, Pro $199)
+□ Create /api/stripe/create-checkout-session
+□ Create /api/stripe/webhook
+□ Handle subscription.created, updated, deleted events
+```
+
+### Task 7.3: Billing UI
+```
+□ Create /settings/billing page
+□ Show current plan and usage
+□ Show next billing date
+□ Upgrade/downgrade buttons
+□ Payment method management (Stripe portal)
+□ Cancel subscription flow
+□ Invoice history
+```
+
+### Task 7.4: Trial Flow
+```
+□ 14-day free trial on signup
+□ No credit card required
+□ Trial countdown in dashboard
+□ Upgrade prompts as trial ends
+□ Grace period handling
+```
+
+**Phase 7 Deliverable:** Full subscription management.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## PHASE 8: POLISH & LAUNCH (Week 8-9)
+## ═══════════════════════════════════════════════════════════════
+
+**Goal:** Production-ready application.
+
+### Task 8.1: Onboarding Flow
+```
+□ Optimized first-time user experience
+□ Step 1: Signup
+□ Step 2: "Who is this report for?" (add client name)
+□ Step 3: Upload CSV
+□ Step 4: Generate first report
+□ Step 5: POST-SUCCESS: "Add your logo to make it yours"
+□ Target: <5 minutes to first report
+```
+
+### Task 8.2: Error Handling
+```
+□ Global error boundary
+□ Friendly error messages (no stack traces)
+□ Retry mechanisms for transient failures
+□ Error logging to ERRORS.md or external service
+□ "Contact Support" fallback
+```
+
+### Task 8.3: Performance Optimization
+```
+□ Lazy load heavy components
+□ Optimize images
+□ Add loading skeletons
+□ Minimize bundle size
+□ Test on slow connections
+```
+
+### Task 8.4: Testing
+```
+□ Test all user flows end-to-end
+□ Test on Chrome, Firefox, Safari
+□ Test responsive design (mobile, tablet)
+□ Test with various CSV formats
+□ Test error states
+□ Test billing flows (use Stripe test mode)
+```
+
+### Task 8.5: Deployment
+```
+□ Set up Vercel project
+□ Configure environment variables
+□ Set up custom domain (optional)
+□ Enable Vercel Analytics
+□ Configure Supabase production URL
+□ Test production deployment
+```
+
+**Phase 8 Deliverable:** Production-ready app deployed to Vercel.
+
+---
+
+## ═══════════════════════════════════════════════════════════════
+## POST-MVP PHASES (Future)
+## ═══════════════════════════════════════════════════════════════
+
+### Phase 9: Google Ads Support (Q2 2026)
+- Support CSV uploads from Google Ads Manager
+- Adapt validation for Google Ads columns
+- Adapt AI prompts for Google Ads metrics
+
+### Phase 10: Custom Templates (Q3 2026)
+- Allow customizing which sections appear
+- Add custom text blocks
+- Drag-and-drop section reordering
+
+### Phase 11: API Access (Q3 2026)
+- RESTful API for programmatic report generation
+- API key management
+- Rate limiting
+
+### Phase 12: Team Collaboration (Q4 2026)
+- Multi-user accounts
+- Roles (Admin, Member)
+- Comments on reports
+- Task assignment
+
+### Phase 13: Historical Trends (Q4 2026)
+- Compare current month to previous months
+- Trend charts in reports
+- Performance over time graphs
+
+---
+
+## DIRECTORY STRUCTURE
 
 ```
 ReportForge/
-├── app/                    # Next.js 14 App Router
-│   ├── (auth)/            # Auth routes (login, signup)
-│   ├── (dashboard)/       # Protected routes
+├── src/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── login/page.tsx
+│   │   │   ├── signup/page.tsx
+│   │   │   └── callback/route.ts
+│   │   ├── (dashboard)/
+│   │   │   ├── layout.tsx          # Dashboard shell with sidebar
+│   │   │   ├── dashboard/page.tsx  # Main dashboard
+│   │   │   ├── reports/
+│   │   │   │   ├── page.tsx        # Reports list
+│   │   │   │   ├── new/page.tsx    # New report flow
+│   │   │   │   └── [id]/
+│   │   │   │       ├── page.tsx    # Report detail
+│   │   │   │       └── edit/page.tsx # Analysis editor
+│   │   │   ├── clients/page.tsx
+│   │   │   └── settings/
+│   │   │       ├── page.tsx
+│   │   │       ├── branding/page.tsx
+│   │   │       ├── billing/page.tsx
+│   │   │       └── account/page.tsx
+│   │   ├── api/
+│   │   │   ├── analyze/route.ts
+│   │   │   ├── generate-pdf/route.ts
+│   │   │   └── stripe/
+│   │   │       ├── create-checkout-session/route.ts
+│   │   │       └── webhook/route.ts
+│   │   ├── layout.tsx
+│   │   └── page.tsx                # Landing/marketing page
+│   ├── components/
+│   │   ├── ui/                     # Shadcn/UI components
 │   │   ├── dashboard/
 │   │   ├── reports/
 │   │   ├── clients/
-│   │   └── settings/
-│   ├── api/               # API routes
-│   └── layout.tsx
-├── components/
-│   ├── ui/                # Shadcn/UI components
-│   └── ...                # Feature components
-├── lib/
-│   ├── supabase/          # Supabase client
-│   ├── openai/            # OpenAI integration
-│   └── utils/
-├── docs/                   # Documentation (read first!)
-└── public/
+│   │   └── pdf/
+│   ├── lib/
+│   │   ├── supabase/
+│   │   │   ├── client.ts
+│   │   │   ├── server.ts
+│   │   │   └── middleware.ts
+│   │   ├── openai/
+│   │   │   └── client.ts
+│   │   ├── stripe/
+│   │   │   └── client.ts
+│   │   ├── csv/
+│   │   │   └── validator.ts
+│   │   └── utils.ts
+│   └── types/
+│       └── index.ts
+├── public/
+├── docs/                           # Documentation (read these!)
+├── AI_AGENT_PROMPT.txt            # This file
+├── PROGRESS.md                     # Task tracking
+├── ERRORS.md                       # Bug log
+└── README.md
 ```
 
 ---
 
-## 🎯 Quick Reference: Key Metrics
+## QUICK COMMANDS
 
-| Metric | Target |
-|:---|:---|
-| Time to First Report | <5 minutes |
-| CSV Validation | <5 seconds |
-| AI Analysis | <30 seconds |
-| PDF Generation | <10 seconds |
-| Report Generation Success Rate | >95% |
+```bash
+# Start development server
+npm run dev
+
+# Install a Shadcn component
+npx shadcn-ui@latest add button
+
+# Generate Supabase types
+npx supabase gen types typescript --project-id YOUR_PROJECT_ID > src/types/supabase.ts
+
+# Build for production
+npm run build
+
+# Deploy to Vercel
+vercel --prod
+```
+
+---
+
+## CHECKLIST TEMPLATE
+
+Copy this to PROGRESS.md and check off as you complete:
+
+```markdown
+# ReportForge Development Progress
+
+## Phase 1: Foundation
+- [ ] Task 1.1: Project Initialization
+- [ ] Task 1.2: Supabase Setup
+- [ ] Task 1.3: Authentication
+- [ ] Task 1.4: Dashboard Shell
+
+## Phase 2: Client Management
+- [ ] Task 2.1: Client List Page
+- [ ] Task 2.2: Add Client
+- [ ] Task 2.3: Edit/Delete Client
+
+## Phase 3: CSV Upload & Validation
+- [ ] Task 3.1: New Report Page
+- [ ] Task 3.2: File Upload Component
+- [ ] Task 3.3: CSV Validation
+- [ ] Task 3.4: Validation UI Feedback
+
+## Phase 4: AI Analysis
+- [ ] Task 4.1: OpenAI Integration
+- [ ] Task 4.2: Analysis Processing
+- [ ] Task 4.3: Analysis Editor
+- [ ] Task 4.4: Analysis State Management
+
+## Phase 5: PDF Generation
+- [ ] Task 5.1: PDF Template
+- [ ] Task 5.2: Branding Integration
+- [ ] Task 5.3: PDF Generation API
+- [ ] Task 5.4: PDF Download Flow
+
+## Phase 6: Report History & Settings
+- [ ] Task 6.1: Reports List Page
+- [ ] Task 6.2: Report Detail Page
+- [ ] Task 6.3: Agency Branding Settings
+- [ ] Task 6.4: Account Settings
+
+## Phase 7: Billing & Usage
+- [ ] Task 7.1: Usage Tracking
+- [ ] Task 7.2: Stripe Integration
+- [ ] Task 7.3: Billing UI
+- [ ] Task 7.4: Trial Flow
+
+## Phase 8: Polish & Launch
+- [ ] Task 8.1: Onboarding Flow
+- [ ] Task 8.2: Error Handling
+- [ ] Task 8.3: Performance Optimization
+- [ ] Task 8.4: Testing
+- [ ] Task 8.5: Deployment
+```
+
+---
+
+## HOW TO USE THIS FILE
+
+Tell your AI assistant:
+
+> "Read the file AI_AGENT_PROMPT.txt and start working on [PHASE X, TASK Y]"
+
+Or:
+
+> "Read AI_AGENT_PROMPT.txt and continue from where we left off based on PROGRESS.md"
+
+The AI will have all the context it needs to build ReportForge.
