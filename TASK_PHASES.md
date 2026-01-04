@@ -2,7 +2,37 @@
 
 This document contains the complete development roadmap from MVP to launch.
 
-**Before starting any phase, ensure you've read `AI_AGENT_PROMPT.txt` for context.**
+**Before starting any phase:**
+1. Read `AI_AGENT_PROMPT.txt` for context and rules
+2. Read `docs/09-DIRECTORY-STRUCTURE.md` for where to save all files
+
+---
+
+## DIRECTORY STRUCTURE REFERENCE
+
+**→ See `docs/09-DIRECTORY-STRUCTURE.md` for the complete file tree.**
+
+Quick reference for source code locations:
+```
+src/
+├── app/              ← Pages and API routes
+│   ├── (auth)/       ← Login, signup, callback
+│   ├── (dashboard)/  ← Dashboard, reports, clients, settings
+│   └── api/          ← API routes (analyze, generate-pdf, stripe)
+├── components/       ← React components (organized by feature)
+│   ├── ui/           ← Shadcn/UI base components
+│   ├── reports/      ← Report components (UploadZone, AnalysisEditor, etc.)
+│   ├── clients/      ← Client components
+│   ├── pdf/          ← PDF components
+│   └── layout/       ← Sidebar, Header, etc.
+├── lib/              ← Utilities and clients
+│   ├── supabase/     ← Supabase client/server
+│   ├── openai/       ← OpenAI client and prompts
+│   ├── csv/          ← CSV parser and validator
+│   └── utils/        ← Helper functions
+├── hooks/            ← Custom React hooks
+└── types/            ← TypeScript type definitions
+```
 
 ---
 
