@@ -133,6 +133,133 @@ Tell me which phase and task you want to work on:
 
 ---
 
+## PROGRESS & ERROR TRACKING (MANDATORY)
+
+**You MUST maintain these files throughout development.**
+
+### PROGRESS.md
+
+Create this file at the root and update it after EVERY completed task.
+
+**Template:**
+```markdown
+# ReportForge Development Progress
+
+**Last Updated:** [DATE AND TIME]
+**Current Phase:** [PHASE NUMBER]
+**Current Task:** [TASK NUMBER]
+
+---
+
+## Completed Tasks
+
+### Phase 1: Foundation
+- [x] Task 1.1: Project Initialization ✅ (2026-01-04)
+- [x] Task 1.2: Supabase Setup ✅ (2026-01-05)
+- [ ] Task 1.3: Authentication ⏳ IN PROGRESS
+- [ ] Task 1.4: Dashboard Shell
+
+### Phase 2: Client Management
+- [ ] Task 2.1: Client List Page
+- [ ] Task 2.2: Add Client
+- [ ] Task 2.3: Edit/Delete Client
+
+[... continue for all phases ...]
+
+---
+
+## Session Notes
+
+### Session: 2026-01-04
+- Completed: Task 1.1, Task 1.2
+- Started: Task 1.3
+- Blockers: None
+- Next: Finish auth flow
+
+### Session: [DATE]
+- Completed: [TASKS]
+- Started: [TASK]
+- Blockers: [ANY ISSUES]
+- Next: [PLAN]
+```
+
+**Rules for PROGRESS.md:**
+1. Update after EVERY completed task
+2. Mark tasks: `[ ]` (not started), `⏳ IN PROGRESS`, `[x] ✅` (complete)
+3. Add date when completed
+4. Log session notes at the end of each coding session
+5. Note any blockers or issues
+
+---
+
+### ERRORS.md
+
+Create this file at the root and log ALL errors encountered.
+
+**Template:**
+```markdown
+# ReportForge Error Log
+
+---
+
+## Error #001
+**Date:** 2026-01-04
+**Task:** Task 1.2 - Supabase Setup
+**Error:** 
+```
+TypeError: Cannot read property 'id' of undefined
+at createClient (client.ts:15)
+```
+**Cause:** Missing environment variable NEXT_PUBLIC_SUPABASE_URL
+**Solution:** Added missing env var to .env.local
+**Status:** ✅ RESOLVED
+
+---
+
+## Error #002
+**Date:** [DATE]
+**Task:** [TASK NUMBER AND NAME]
+**Error:** 
+```
+[ERROR MESSAGE]
+```
+**Cause:** [ROOT CAUSE]
+**Solution:** [HOW IT WAS FIXED]
+**Status:** ✅ RESOLVED / ⏳ INVESTIGATING / ❌ BLOCKED
+
+---
+
+## Recurring Issues
+
+| Issue | Frequency | Workaround |
+|:---|:---|:---|
+| Supabase connection timeout | 2x | Restart dev server |
+| PDF fonts not loading | 1x | Clear .next cache |
+```
+
+**Rules for ERRORS.md:**
+1. Log EVERY error, even minor ones
+2. Include full error message (in code block)
+3. Document the root cause
+4. Document the solution
+5. Mark status (RESOLVED, INVESTIGATING, BLOCKED)
+6. Track recurring issues at the bottom
+
+---
+
+### When to Update These Files
+
+| Action | Update PROGRESS.md | Update ERRORS.md |
+|:---|:---|:---|
+| Complete a task | ✅ Check off task | — |
+| Start a new task | ✅ Mark as IN PROGRESS | — |
+| Encounter an error | — | ✅ Log the error |
+| Fix an error | — | ✅ Mark as RESOLVED |
+| End a coding session | ✅ Add session notes | — |
+| Start a new session | ✅ Check current status | ✅ Review open issues |
+
+---
+
 ## FILE ORGANIZATION RULES
 
 **Keep the project directory clean. Every file has its place.**
