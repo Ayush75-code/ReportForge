@@ -12,12 +12,13 @@
 2. Market Size & Opportunity
 3. Target Market Analysis
 4. Competitive Landscape
-5. Customer Pain Points (From Real Discussions)
-6. Industry Trends (2025-2026)
-7. Pricing Analysis
-8. SWOT Analysis
-9. Strategic Positioning
-10. Go-To-Market Recommendations
+5. Customer Pain Points (Voice of the Customer)
+6. Feasibility & Risk Analysis (New)
+7. Industry Trends (2025-2026)
+8. Pricing Analysis
+9. SWOT Analysis
+10. Strategic Positioning
+11. Go-To-Market Recommendations
 
 ---
 
@@ -128,6 +129,15 @@ While competitors build dashboards, ReportForge writes the story. Our CSV-first,
 | **Databox** | Free-$135/mo | 100+ | Multi-channel dashboards | Complex setup, not agency-focused |
 | **Supermetrics** | $39+/mo | 100+ | Data connectors | Just data pipes, no insights |
 
+### The "DIY Hack" Competitor
+Many agencies try to build their own solution using **Zapier + ChatGPT + Google Sheets**.
+*   **Limitation 1:** Data formatting fragility (ChatGPT outputs messy JSON).
+*   **Limitation 2:** Row limits (Zapier often caps at 500 rows).
+*   **Limitation 3:** Cost of maintenance (APIs break, logic fails).
+*   **Limitation 4:** Security (Uploading client data to public ChatGPT interface).
+
+**ReportForge Advantage:** We handle the infrastructure, security, and formatting reliability. "Stop debugging Zapier, start reporting."
+
 ### Competitor Feature Comparison
 
 | Feature | AgencyAnalytics | DashThis | Whatagraph | **ReportForge** |
@@ -139,53 +149,52 @@ While competitors build dashboards, ReportForge writes the story. Our CSV-first,
 | Time to First Report | 30+ min (setup) | 15+ min (setup) | 20+ min (setup) | ✅ **<5 minutes** |
 | Pricing Simplicity | ❌ Complex | ⚠️ Moderate | ❌ Opaque | ✅ **Simple** |
 
-### Key Insight: The "Narrative Gap"
-All major competitors focus on **data visualization** (charts, dashboards, tables). None of them write the **executive story for you**. 
+---
 
-> "Clients don't want data. They want to know what happened, why, and what to do next." — Reddit r/PPC discussion
+## 5. CUSTOMER PAIN POINTS (Voice of the Customer)
 
-ReportForge fills this gap with AI-generated insights that are **editable before export**, ensuring human quality control.
+### "Robotic AI" Complaints (Validation for Human-in-the-Loop)
+> "Clients hate finding 'hallucinated' data in reports. One bad number and I lose trust forever." — Reddit r/marketing
+
+> "ChatGPT sounds like a robot. I spend more time rewriting its summary than if I wrote it myself." — Agency Account Manager
+
+**Our Solution:**
+1.  **Strict Prompting:** We use "Chain of Thought" referencing specific numbers from the CSV to prevent hallucinations.
+2.  **The Forge Editor:** We force a review step. The UI is designed to make editing easy, reinforcing that *you* are the author, AI is just the drafter.
+
+### "Reporting Hell" (Validation for Automation)
+> "I spend the first week of every month just copy-pasting CSVs into Excel. It's soul-crushing." — Reddit r/PPC
+
+> "We tried building a Looker Studio dashboard but it keeps breaking every time Meta changes a field name." — Agency Owner
+
+**Our Solution:**
+1.  **CSV-First:** We handle the messy parsing. If Meta changes a column name, we update our parser once for everyone.
+2.  **Snapshot vs. Dashboard:** We sell "finished reports" (PDFs), not "broken dashboards."
 
 ---
 
-## 5. CUSTOMER PAIN POINTS (From Real Discussions)
+## 6. FEASIBILITY & RISK ANALYSIS (New)
 
-### Source: Reddit r/PPC, r/marketing, r/DigitalMarketing
+### Technical Feasibility: Can we analyze large CSVs cheaply?
+*   **Challenge:** A Meta Ads export for a month can be large (10k+ rows).
+*   **Solution:** We don't send *every* row to OpenAI.
+    *   **Step 1:** Typescript logic (PapaParse) aggregates data locally (Total Spend, CPA, CTR).
+    *   **Step 2:** We identify "Top 5" and "Bottom 5" campaigns based on Spend/ROAS.
+    *   **Step 3:** We only send the *aggregated stats* + *key campaign highlights* to OpenAI.
+*   **Cost Estimate:**
+    *   Input: ~2,000 tokens (Aggregated JSON)
+    *   Output: ~1,000 tokens (Analysis)
+    *   Model: GPT-4o-mini
+    *   Cost per Report: **~$0.002** (Essentially free).Even with GPT-4 classic, it's <$0.10 per report.
+    *   **Profit Margin:** Extremely high at $99/mo price point.
 
-**Pain Point 1: "Reporting takes forever"**
-> "I spend up to 5 hours per client just on monthly reporting. Pulling data, reformatting, writing commentary from scratch." — Reddit user
-
-**Pain Point 2: "Clients don't read dashboards"**
-> "We built beautiful Looker Studio dashboards. Clients look at them for 30 seconds and ask 'so is it good or bad?'" — Reddit user
-
-**Pain Point 3: "Junior staff write generic reports"**
-> "Different account managers write wildly different quality reports. Training is painful." — Agency owner on Reddit
-
-**Pain Point 4: "Existing tools are expensive and complex"**
-> "AgencyAnalytics is great but pricing gets crazy once you have 20+ clients. And DashThis charges per dashboard which is annoying." — Reddit user
-
-**Pain Point 5: "AI summaries aren't enough"**
-> "Some tools have AI summaries now but they're generic. I still have to rewrite everything." — Reddit user
-
-### Source: Quora Discussions
-
-**Pain Point 6: "Clients complain about lack of ROI clarity"**
-> "The #1 complaint from clients is 'I don't know if this is working.' Reports need to clearly show impact." — Quora answer
-
-**Pain Point 7: "Automated reports feel impersonal"**
-> "Clients can tell when a report is auto-generated with no human analysis. It erodes trust." — Marketing consultant on Quora
-
-### Source: Industry Reports
-
-**Pain Point 8: "Proving ROI is paramount"**
-> "Clients demand tangible business outcomes and a direct link between marketing activities and their bottom line." — Entrepreneur.com (2025)
-
-**Pain Point 9: "Data privacy makes targeting harder"**
-> "Stricter regulations and cookie deprecation make analytics more challenging." — Industry analysis
+### Platform Risk: Meta API Dependencies
+*   **Risk:** Meta makes data harder to export.
+*   **Mitigation:** We consume *standard CSV exports*. As long as Meta allows "Export to CSV" (a fundamental feature), we are safe. We aren't reliant on maintaining a fragile Graph API tokens for MVP.
 
 ---
 
-## 6. INDUSTRY TRENDS (2025-2026)
+## 7. INDUSTRY TRENDS (2025-2026)
 
 ### AI in Marketing Adoption
 | Statistic | Value | Source |
@@ -217,14 +226,9 @@ ReportForge fills this gap with AI-generated insights that are **editable before
 - Clients prefer Loom videos or 1-page summaries over 10-page PDFs
 - ReportForge's focused format (summary + wins + concerns + recommendations) aligns with this trend
 
-### Video vs. PDF Trend
-> "Many clients actually prefer a 3-minute Loom video walking through the data than a 15-page report." — Reddit user
-
-**Implication:** ReportForge could consider video summaries as a future feature (Q3 2026 roadmap candidate).
-
 ---
 
-## 7. PRICING ANALYSIS
+## 8. PRICING ANALYSIS
 
 ### Competitor Pricing Comparison
 
@@ -251,7 +255,7 @@ ReportForge fills this gap with AI-generated insights that are **editable before
 
 ---
 
-## 8. SWOT ANALYSIS
+## 9. SWOT ANALYSIS
 
 ### Strengths
 | Strength | Impact |
@@ -288,7 +292,7 @@ ReportForge fills this gap with AI-generated insights that are **editable before
 
 ---
 
-## 9. STRATEGIC POSITIONING
+## 10. STRATEGIC POSITIONING
 
 ### Positioning Statement
 > **For marketing agencies** who struggle with time-consuming client reports, **ReportForge** is an **AI writing assistant** that transforms Meta Ads data into branded PDF reports in under 60 seconds. Unlike dashboard tools that visualize data, **ReportForge writes the narrative for you**—so you can review, edit, and send with confidence.
@@ -314,7 +318,7 @@ ReportForge fills this gap with AI-generated insights that are **editable before
 
 ---
 
-## 10. GO-TO-MARKET RECOMMENDATIONS
+## 11. GO-TO-MARKET RECOMMENDATIONS
 
 ### Phase 1: Launch (Q1 2026)
 - **Target:** 100 beta users from Reddit r/PPC, r/marketing, agency Slack communities

@@ -302,11 +302,14 @@ For an agency with 10 clients: **20-40 hours/month on reporting alone.**
 
 **Acceptance Criteria:**
 *   ✅ Analysis completes in <30 seconds for typical datasets.
-*   ✅ Output includes: summary (2-3 sentences), 3 wins, 2 concerns, 3 recommendations.
+*   ✅ Output includes: **Performance Score** (0-100), Quick Summary (1 sentence), detailed summary (2-3 sentences), 3 wins, 2 concerns, 3 recommendations.
+*   ✅ **Performance Score** answers "Is it good or bad?" at a glance (80+: Strong, 50-79: Moderate, <50: Needs Attention).
+*   ✅ **Quick Summary** is a scannable, single-sentence overview (e.g., "Spent $2,450, generated 89 conversions at $27 CPA. Strong performance.").
 *   ✅ AI mentions specific campaign names (not generic).
 *   ✅ AI includes actual metrics from data (not vague statements).
 *   ✅ User can regenerate analysis if unsatisfied (up to 3 times).
 *   ✅ Analysis is editable before PDF generation.
+*   ✅ **Personal Note** field available for user to add human touch (optional, but prompted).
 
 **Priority:** P0 (Must-Have for MVP)
 **Complexity:** High
@@ -449,38 +452,39 @@ Compare current month's performance to previous months.
 
 ## 8. USER FLOWS
 
-### User Flow 1: First-Time User Onboarding
+### User Flow 1: First-Time User Onboarding (Optimized for 5-Minute Time-to-Value)
 ```
 START: User signs up
     ↓
 1. Enter email + password → Receive verification email → Click link
     ↓
-2. Welcome screen: "Let's set up your agency branding"
+2. Welcome screen: "Let's create your first report in 60 seconds!"
     ↓
-3. Upload logo (optional, can skip)
+3. Prompt: "Who is this report for?" → Enter client name (name only, 10 seconds)
     ↓
-4. Set brand color (optional, default #6366f1 provided)
+4. Upload CSV file (Drag-drop or browse)
     ↓
-5. Prompt: "Add your first client" → Enter client name → Save
+5. Validation loading (2-5 seconds) → Success: "12 campaigns validated"
     ↓
-6. Tutorial overlay: "Now let's create your first report!" → Click "New Report"
+6. Click "Generate Analysis" → AI processing (15-30 sec)
     ↓
-7. Select client from dropdown
+7. Analysis appears with **Performance Score** badge (e.g., "82 - Strong")
     ↓
-8. Upload CSV file (Drag-drop or browse)
+8. User reviews Quick Summary → Edits if needed → Adds Personal Note (optional)
     ↓
-9. Validation loading (2-5 seconds) → Success: "12 campaigns validated"
+9. Click "Forge PDF" → PDF rendering (5-10 sec)
     ↓
-10. Click "Generate Analysis" → AI processing (15-30 sec)
+10. Success! Download PDF → Celebration 🎉
     ↓
-11. Analysis appears → User reads summary → (Optional) Click "Edit"
-    ↓
-12. Click "Forge PDF" → PDF rendering (5-10 sec)
-    ↓
-13. Success! Download PDF → Celebration 🎉
+11. **POST-SUCCESS PROMPT:** "Make it yours! Add your agency logo and brand color."
+    → User can add branding now OR skip and do later in Settings.
 
-TIME TO COMPLETE: 5-10 minutes
+TIME TO COMPLETE: 3-5 minutes (branding deferred to reduce friction)
 ```
+
+**Rationale (from Market Research):**
+- "5-minute time-to-value is critical for trial conversion."
+- Deferring branding until after first success increases emotional investment.
 
 ### User Flow 2: Generating a Regular Report (Returning User)
 ```
