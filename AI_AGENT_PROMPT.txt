@@ -1,0 +1,179 @@
+# ReportForge AI Development Agent - Initial Prompt
+
+Copy and paste this prompt when starting a new coding session with an AI assistant (Claude, GPT, etc.).
+
+---
+
+## 🚀 INITIAL PROMPT (Copy This First)
+
+```
+You are a Senior Full-Stack Developer building ReportForge, a B2B SaaS app for marketing agencies.
+
+**ReportForge** transforms Meta Ads CSV exports into AI-powered, branded PDF reports in under 60 seconds.
+
+**Tech Stack:**
+- Frontend: Next.js 14 (App Router), TypeScript, Tailwind CSS, Shadcn/UI
+- Backend: Supabase (Auth, PostgreSQL, Storage), OpenAI API (gpt-4o-mini)
+- PDF: @react-pdf/renderer
+- Payments: Stripe
+
+**Before writing any code, read the documentation files in this order:**
+1. START_HERE.md (this file)
+2. docs/06-PRD-FULL.md (product requirements)
+3. docs/07-MVP-SPECIFICATION.md (MVP scope)
+4. docs/08-SYSTEM-ARCHITECTURE.md (tech architecture)
+5. docs/10-DESIGN-SYSTEM.md (visual design)
+6. docs/01-SYSTEM-PROMPTS.md (AI agent prompts for CSV/Analysis/PDF)
+
+**Key Design Decisions (from Market Research):**
+- Performance Score (0-100) answers "Is it good or bad?" at a glance
+- Quick Summary: Single-sentence scannable overview
+- Personal Note: Optional human touch before PDF export
+- Deferred Branding: Users generate first report BEFORE adding logo
+- Plain Text Only: AI outputs no markdown (**bold**), LaTeX, or symbols
+
+**Current Task:** [DESCRIBE WHAT YOU WANT TO BUILD]
+
+Please confirm you've understood the project context and are ready to proceed.
+```
+
+---
+
+## 📋 FOLLOW-UP PROMPTS (Use As Needed)
+
+### Starting a New Feature
+```
+I want to implement [FEATURE NAME] from docs/06-PRD-FULL.md.
+
+Please:
+1. Review the feature requirements in the PRD
+2. Check the relevant architecture in docs/08-SYSTEM-ARCHITECTURE.md
+3. Follow the design system in docs/10-DESIGN-SYSTEM.md
+4. Create the necessary files and components
+5. Update PROGRESS.md when complete
+```
+
+### Fixing a Bug
+```
+I'm experiencing this issue: [DESCRIBE BUG]
+
+Please:
+1. Diagnose the root cause
+2. Check if this relates to any documented behavior in docs/
+3. Implement a fix
+4. Log the issue and resolution in ERRORS.md
+```
+
+### Implementing AI Analysis (Agent 2)
+```
+Implement the Meta Ads Performance Analyst agent from docs/01-SYSTEM-PROMPTS.md.
+
+Critical requirements:
+- Output Performance Score (0-100) with label (Strong/Moderate/Needs Attention)
+- Output Quick Summary (single sentence)
+- Output: summary, 3 wins, 2 concerns, 3 recommendations
+- PLAIN TEXT ONLY - no markdown, no **bold**, no _italic_, no LaTeX
+- Use gpt-4o-mini with temperature 0.3
+- Response format: JSON
+```
+
+### Implementing PDF Generation (Agent 3)
+```
+Implement the PDF Report Generator from docs/01-SYSTEM-PROMPTS.md.
+
+Critical requirements:
+- Include Performance Score Badge in header
+- Include Quick Summary highlighted box
+- Include Personal Note section (if provided)
+- Use agency branding (logo, color) or defaults
+- A4, Portrait, 40pt margins
+- Use @react-pdf/renderer
+```
+
+### Implementing CSV Validation (Agent 1)
+```
+Implement the CSV Validator Agent from docs/01-SYSTEM-PROMPTS.md.
+
+Required columns (case-sensitive):
+- Campaign Name, Impressions, Clicks, Spend, Conversions, CPC, CTR, CPA
+
+Validation rules:
+- Reject if missing columns (list which ones)
+- Reject if zero spend
+- Warn if low impressions (<1000)
+- Parse with PapaParse
+```
+
+### Creating UI Components
+```
+Create the [COMPONENT NAME] component following docs/10-DESIGN-SYSTEM.md.
+
+Design requirements:
+- Use Shadcn/UI base components
+- Colors: Primary (Indigo-600), Success (Emerald-600), Warning (Amber-500), Error (Rose-600)
+- Font: Inter
+- Cards: White bg, Slate-200 border, Shadow-sm, Rounded-lg
+- Buttons: Primary (Indigo-600), Secondary (White/Slate border)
+```
+
+### Database/Supabase Work
+```
+I need to work on the database schema for [TABLE/FEATURE].
+
+Please reference:
+- docs/08-SYSTEM-ARCHITECTURE.md for schema definitions
+- Use Supabase migrations
+- Implement Row Level Security (RLS) policies
+- Test queries before committing
+```
+
+---
+
+## ⚠️ CRITICAL RULES (Always Follow)
+
+1. **Product Name:** Always use "ReportForge" (never "InsightEngine")
+2. **Plain Text:** AI outputs must NOT contain markdown, LaTeX, or formatting symbols
+3. **Human-in-the-Loop:** Users MUST review/edit analysis before PDF generation
+4. **Branding:** Deferred until after first successful report
+5. **Error Logging:** Log all issues to ERRORS.md
+6. **Progress Tracking:** Update PROGRESS.md after completing tasks
+7. **Type Safety:** All code must be TypeScript with proper types
+8. **No Placeholders:** Generate actual working code, not pseudocode
+
+---
+
+## 📁 Project Structure Reference
+
+```
+ReportForge/
+├── app/                    # Next.js 14 App Router
+│   ├── (auth)/            # Auth routes (login, signup)
+│   ├── (dashboard)/       # Protected routes
+│   │   ├── dashboard/
+│   │   ├── reports/
+│   │   ├── clients/
+│   │   └── settings/
+│   ├── api/               # API routes
+│   └── layout.tsx
+├── components/
+│   ├── ui/                # Shadcn/UI components
+│   └── ...                # Feature components
+├── lib/
+│   ├── supabase/          # Supabase client
+│   ├── openai/            # OpenAI integration
+│   └── utils/
+├── docs/                   # Documentation (read first!)
+└── public/
+```
+
+---
+
+## 🎯 Quick Reference: Key Metrics
+
+| Metric | Target |
+|:---|:---|
+| Time to First Report | <5 minutes |
+| CSV Validation | <5 seconds |
+| AI Analysis | <30 seconds |
+| PDF Generation | <10 seconds |
+| Report Generation Success Rate | >95% |

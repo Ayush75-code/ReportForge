@@ -1,4 +1,27 @@
 # Complete System Prompt Documentation for AI Agents
+
+## How to Use This Document
+
+This document contains **three production-ready agent specifications** for the ReportForge AI pipeline:
+
+| Agent | When to Use | Input | Output |
+|:---|:---|:---|:---|
+| **Agent 1: CSV Validator** | User uploads a CSV file | Raw CSV text | Valid/Invalid status + error messages |
+| **Agent 2: Performance Analyst** | CSV passes validation | Parsed campaign data | Performance Score, Summary, Wins, Concerns, Recommendations |
+| **Agent 3: PDF Generator** | User clicks "Forge PDF" | Analysis + Branding | Branded PDF file URL |
+
+**Implementation Order:**
+1. Implement Agent 1 first (CSV validation is the entry point)
+2. Implement Agent 2 next (core value proposition)
+3. Implement Agent 3 last (final output)
+
+**Critical Reminders:**
+- All AI text output must be **plain text only** (no markdown, no LaTeX)
+- Agent 2 must output a **Performance Score** (0-100) and **Quick Summary**
+- User must review/edit analysis before PDF generation (human-in-the-loop)
+
+---
+
 This document provides production-ready agent specifications for the ReportForge system. Each agent has explicit roles, workflows, constraints, and error handling protocols.
 
 ## AGENT 1: CSV VALIDATOR AGENT
